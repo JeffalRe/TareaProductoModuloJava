@@ -1,0 +1,98 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../../plantilla/plantilla.xhtml">
+
+            <ui:define name="content">
+                <h1>Datos del Cliente</h1>
+                <h:form>
+                    <p:commandButton value="Nuevo Cliente" actionListener="#{clienteBean.prepareCliente()}"
+                                     oncomplete="PF('dialogNuevoCliente').show()"
+                                     update="formNuevoCliente"/>
+                </h:form>
+                content
+                <h:form id="formListaCliente">
+                    <p:dataTable id="tablaCliente" paginator="true" paginatorPosition="top" 
+                                 var="cliente"  value="#{clienteBean.clients}">
+                        <p:column headerText="Codigo">
+                            <h:outputText value="#{cliente.codCliente}"/>
+
+
+                        </p:column>
+                        <p:column headerText="Nombre del Cliente">
+                            <h:outputText value="#{cliente.nombres} #{cliente.apellidos}"/>
+
+
+                        </p:column>
+                        <p:column headerText="Direccion">
+                            <h:outputText value="#{cliente.direccion}"/>
+
+
+                        </p:column>
+                        <p:column headerText="Modificar">
+                            <p:commandButton value="Modificar"/>
+
+
+                        </p:column>
+                        <p:column headerText="Eliminar">
+                            <p:commandButton value="Eliminar"/>
+
+
+                        </p:column>
+
+                    </p:dataTable>
+
+                </h:form >
+                <h:form id="formNuevoCliente">
+                    <p:dialog id="dlgNuevoCliente" widgetVar="dialogNuevoCliente" resizable="false" showEffect="explode"
+                              hideEffect="explode" modal="true">
+                        <p:panelGrid columns="2" style="margin: 0 auto">
+                            <p:outputLabel value="Nombre"/>
+                            <p:inputText value="#{clienteBean.cliente.nombres}"/>
+
+                            <p:outputLabel value="Apellido"/>
+                            <p:inputText value="#{clienteBean.cliente.apellidos}"/>
+
+                            <p:outputLabel value="Dirección"/>
+                            <p:inputText value="#{clienteBean.cliente.direccion}"/>
+                        </p:panelGrid>
+                        <p:commandButton value="Guardar" actionListener="#{clienteBean.insertCliente()}" 
+                                         update="formListaClientes:tablaClientes"
+                                         oncomplete="PF('dialogNuevoCliente').hide()"
+                                         />
+                        <p:commandButton value="Cancelar" oncomplete="PF('dialogNuevoCliente').hide()"/>
+                    </p:dialog>
+
+                </h:form>
+                <!-- parte del actualizar-->
+
+                <!-- parte del eliminar-->
+                <!--   <h:form id="formEliminarCliente">
+         <p:dialog id="dlgEliminarCliente" widgetVar="dialogEliminaroCliente" resizable="false" showEffect="explode"
+                   hideEffect="explode" modal="true">
+             <h:outputText value="Dese Eliminar el Cliente"/>
+             <p:commandButton value="Guardar" actionListener="#{clienteBean.deleteCliente()}" 
+                              update="formListaClientes:tablaClientes"
+                              oncomplete="PF('dialogNuevoCliente').hide()"
+                              />
+             <p:commandButton value="Cancelar" oncomplete="PF('dialogNuevoCliente').hide()"/>
+         </p:dialog>
+         
+                </h:form>
+               fin parte del eliminar (falta todavia, incompleto)-->
+
+
+
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>
